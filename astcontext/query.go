@@ -29,7 +29,7 @@ type Result struct {
 	Mode string `json:"mode" vim:"mode"`
 
 	Comment Comment `json:"comment,omitempty" vim:"comment,omitempty"`
-	Decls   []Decl  `json:"decls,omitempty" vim:"decls,omitempty"`
+	Decls   []*Decl `json:"decls,omitempty" vim:"decls,omitempty"`
 	Func    *Func   `json:"func,omitempty" vim:"fn,omitempty"`
 }
 
@@ -72,37 +72,50 @@ func (p *Parser) Run(query *Query) (*Result, error) {
 			Func: fn,
 		}, nil
 	case "decls":
-		funcs := p.Funcs().Declarations()
-		types := p.Types().TopLevel()
+		// funcs := p.Funcs().Declarations()
+		// types := p.Types().TopLevel()
+		// types, vars := p.Vars()
+		decls := p.Vars()
 
-		var decls []Decl
+		// var decls []Decl
 
-		for _, incl := range query.Includes {
-			switch incl {
-			case "type":
-				for _, t := range types {
-					decls = append(decls, Decl{
-						Keyword:  "type",
-						Ident:    t.Signature.Name,
-						Full:     t.Signature.Full,
-						Filename: t.TypePos.Filename,
-						Line:     t.TypePos.Line,
-						Col:      t.TypePos.Column,
-					})
-				}
-			case "func":
-				for _, f := range funcs {
-					decls = append(decls, Decl{
-						Keyword:  "func",
-						Ident:    f.Signature.Name,
-						Full:     f.Signature.Full,
-						Filename: f.FuncPos.Filename,
-						Line:     f.FuncPos.Line,
-						Col:      f.FuncPos.Column,
-					})
-				}
-			}
-		}
+		// for _, incl := range query.Includes {
+		//     switch incl {
+		//     case "type":
+		//         for _, t := range types {
+		//             decls = append(decls, Decl{
+		//                 Keyword:  "type",
+		//                 Ident:    t.Signature.Name,
+		//                 Full:     t.Signature.Full,
+		//                 Filename: t.TypePos.Filename,
+		//                 Line:     t.TypePos.Line,
+		//                 Col:      t.TypePos.Column,
+		//             })
+		//         }
+		//     case "func":
+		//         for _, f := range funcs {
+		//             decls = append(decls, Decl{
+		//                 Keyword:  "func",
+		//                 Ident:    f.Signature.Name,
+		//                 Full:     f.Signature.Full,
+		//                 Filename: f.FuncPos.Filename,
+		//                 Line:     f.FuncPos.Line,
+		//                 Col:      f.FuncPos.Column,
+		//             })
+		//         }
+		//     case "var":
+		//         for _, v := range vars {
+		//             decls = append(decls, Decl{
+		//                 Keyword:  "var",
+		//                 Ident:    v.Name,
+		//                 Full:     v.Name,
+		//                 Filename: v.VarPos.Filename,
+		//                 Line:     v.VarPos.Line,
+		//                 Col:      v.VarPos.Column,
+		//             })
+		//         }
+		//     }
+		// }
 
 		return &Result{
 			Mode:  query.Mode,
