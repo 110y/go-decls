@@ -47,16 +47,16 @@ func (p *Parser) Vars() []*Decl {
 								node:   s,
 							}
 
-							d := &Decl{
-								Keyword:  "Var",
-								Ident:    v.Name,
-								Full:     v.Name,
-								Filename: v.VarPos.Filename,
-								Line:     v.VarPos.Line,
-								Col:      v.VarPos.Column,
+							if v.Name != "_" {
+								decls = append(decls, &Decl{
+									Keyword:  "Var",
+									Ident:    v.Name,
+									Full:     v.Name,
+									Filename: v.VarPos.Filename,
+									Line:     v.VarPos.Line,
+									Col:      v.VarPos.Column,
+								})
 							}
-
-							decls = append(decls, d)
 						}
 					case token.CONST:
 						s, ok := spec.(*ast.ValueSpec)
@@ -67,14 +67,16 @@ func (p *Parser) Vars() []*Decl {
 								node:   s,
 							}
 
-							decls = append(decls, &Decl{
-								Keyword:  "Const",
-								Ident:    v.Name,
-								Full:     v.Name,
-								Filename: v.VarPos.Filename,
-								Line:     v.VarPos.Line,
-								Col:      v.VarPos.Column,
-							})
+							if v.Name != "_" {
+								decls = append(decls, &Decl{
+									Keyword:  "Const",
+									Ident:    v.Name,
+									Full:     v.Name,
+									Filename: v.VarPos.Filename,
+									Line:     v.VarPos.Line,
+									Col:      v.VarPos.Column,
+								})
+							}
 						}
 					case token.TYPE:
 						s, ok := spec.(*ast.TypeSpec)
