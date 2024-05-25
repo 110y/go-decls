@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/fatih/motion/astcontext"
-	"github.com/fatih/motion/vim"
+	"github.com/110y/go-decls/astcontext"
+	"github.com/110y/go-decls/vim"
 )
 
 func main() {

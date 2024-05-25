@@ -1,4 +1,4 @@
-# Motion [![](https://github.com/fatih/motion/workflows/build/badge.svg)](https://github.com/fatih/motion/actions)
+# Motion [![](https://github.com/110y/go-decls/workflows/build/badge.svg)](https://github.com/110y/go-decls/actions)
 
 Motion is a tool that was designed to work with editors. It is providing
 contextual information for a given offset(option) from a file or directory of
@@ -12,7 +12,7 @@ editor.  It's currently work in progress and open to change.
 # Install
 
 ```bash
-go get github.com/fatih/motion
+go get github.com/110y/go-decls
 ```
 
 # Usage
