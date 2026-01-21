@@ -87,29 +87,29 @@ func (p *Parser) Vars() []*Decl {
 								keyword = "Struct"
 							} else if _, ok := s.Type.(*ast.InterfaceType); ok {
 								keyword = "Interface"
+							} else {
+								keyword = "Type"
 							}
 
-							if keyword != "" {
-								t := &Type{
-									TypePos: ToPosition(p.fset.Position(s.Name.Pos())),
-									node:    s,
-								}
-
-								if s.Doc != nil {
-									t.Doc = ToPosition(p.fset.Position(x.Doc.Pos()))
-								}
-
-								t.Signature = NewTypeSignature(s)
-
-								decls = append(decls, &Decl{
-									Keyword:  keyword,
-									Ident:    t.Signature.Name,
-									Full:     t.Signature.Full,
-									Filename: t.TypePos.Filename,
-									Line:     t.TypePos.Line,
-									Col:      t.TypePos.Column,
-								})
+							t := &Type{
+								TypePos: ToPosition(p.fset.Position(s.Name.Pos())),
+								node:    s,
 							}
+
+							if s.Doc != nil {
+								t.Doc = ToPosition(p.fset.Position(x.Doc.Pos()))
+							}
+
+							t.Signature = NewTypeSignature(s)
+
+							decls = append(decls, &Decl{
+								Keyword:  keyword,
+								Ident:    t.Signature.Name,
+								Full:     t.Signature.Full,
+								Filename: t.TypePos.Filename,
+								Line:     t.TypePos.Line,
+								Col:      t.TypePos.Column,
+							})
 						}
 					}
 				}
